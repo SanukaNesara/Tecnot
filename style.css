@@ -1,3 +1,13 @@
+
+/* Gradient Text */
+.gradient-text {
+    background: linear-gradient(135deg, #003B73 0%, #00d2ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
 /* Base Styles */
 :root {
     --primary-green: #79AFA2;
@@ -13,7 +23,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1, h2, h3, .section-title {
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
