@@ -1,7 +1,7 @@
 
 /* Gradient Text */
 .gradient-text {
-    background: linear-gradient(135deg, #003B73 0%, #00d2ff 100%);
+    background: linear-gradient(135deg, #2f73007a 0%, #009fff87 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -138,7 +138,7 @@ header {
 /* Logo Styles */
 .logo-img {
 
-    height: 80px;
+    height: 37px;
     width: auto;
     display: block;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
