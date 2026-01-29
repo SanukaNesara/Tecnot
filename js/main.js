@@ -130,4 +130,42 @@ document.addEventListener('DOMContentLoaded', function() {
             closeMobileMenu();
         }
     });
+
+    // Cursor tracking in mockup box
+    const mockupBox = document.getElementById('mockupBox');
+    const cursorRing = document.getElementById('cursorRing');
+    const cursorTrail = document.getElementById('cursorTrail');
+    let trailX = 0, trailY = 0;
+
+    if (mockupBox && cursorRing && cursorTrail) {
+        // Show cursor when entering
+        mockupBox.addEventListener('mouseenter', function() {
+            cursorRing.classList.add('active');
+            cursorTrail.classList.add('active');
+        });
+
+        // Hide cursor when leaving
+        mockupBox.addEventListener('mouseleave', function() {
+            cursorRing.classList.remove('active');
+            cursorTrail.classList.remove('active');
+        });
+
+        // Move cursor with mouse
+        mockupBox.addEventListener('mousemove', function(e) {
+            const rect = mockupBox.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Main cursor follows immediately
+            cursorRing.style.left = x + 'px';
+            cursorRing.style.top = y + 'px';
+
+            // Trail follows with smooth easing
+            trailX += (x - trailX) * 0.2;
+            trailY += (y - trailY) * 0.2;
+
+            cursorTrail.style.left = trailX + 'px';
+            cursorTrail.style.top = trailY + 'px';
+        });
+    }
 });
