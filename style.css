@@ -375,6 +375,7 @@ nav ul li a:hover::after {
 #mockupBox {
     position: relative;
     overflow: hidden;
+    cursor: none;
 }
 
 /* Main cursor circle with dot */
@@ -401,6 +402,10 @@ nav ul li a:hover::after {
     left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0 0 12px rgba(121, 175, 162, 0.9);
+}
+
+.cursor-ring.active {
+    display: block;
 }
 
 /* Large trailing circle (double the size) */
