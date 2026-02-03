@@ -131,4 +131,104 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // ═══════════════════════════════════════════════════════════════════
+    // 3D Cards Carousel
+    // ═══════════════════════════════════════════════════════════════════
+    const carousel = document.getElementById('cardsCarousel');
+    const caption = document.getElementById('carouselCaption');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    if (carousel && caption && prevBtn && nextBtn) {
+        const cards = carousel.querySelectorAll('.carousel-card');
+        const positions = ['far-left', 'left', 'center', 'right', 'far-right'];
+        let currentIndex = 0;
+        let autoPlayInterval;
+
+        // Initialize card positions
+        function updatePositions() {
+            cards.forEach((card, index) => {
+                // Calculate position relative to current index
+                let posIndex = index - currentIndex;
+
+                // Wrap around for infinite loop effect
+                if (posIndex < -2) posIndex += cards.length;
+                if (posIndex > 2) posIndex -= cards.length;
+
+                // Map to position names
+                const posName = positions[posIndex + 2] || 'far-right';
+                card.setAttribute('data-position', posName);
+            });
+
+            // Update caption
+            const centerCard = cards[currentIndex];
+            if (centerCard) {
+                caption.style.opacity = '0';
+                setTimeout(() => {
+                    caption.textContent = centerCard.getAttribute('data-caption');
+                    caption.style.opacity = '1';
+                }, 150);
+            }
+        }
+
+        // Navigate to next slide
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % cards.length;
+            updatePositions();
+        }
+
+        // Navigate to previous slide
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+            updatePositions();
+        }
+
+        // Start auto-play
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(nextSlide, 4000);
+        }
+
+        // Stop auto-play
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', () => {
+            stopAutoPlay();
+            nextSlide();
+            startAutoPlay();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            stopAutoPlay();
+            prevSlide();
+            startAutoPlay();
+        });
+
+        // Click on side cards to navigate
+        cards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                const position = card.getAttribute('data-position');
+                if (position === 'left') {
+                    stopAutoPlay();
+                    prevSlide();
+                    startAutoPlay();
+                } else if (position === 'right') {
+                    stopAutoPlay();
+                    nextSlide();
+                    startAutoPlay();
+                }
+            });
+        });
+
+        // Pause on hover
+        carousel.addEventListener('mouseenter', stopAutoPlay);
+        carousel.addEventListener('mouseleave', startAutoPlay);
+
+        // Initialize
+        updatePositions();
+        startAutoPlay();
+    }
 });
