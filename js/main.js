@@ -232,3 +232,38 @@ document.addEventListener('DOMContentLoaded', function() {
         startAutoPlay();
     }
 });
+
+// ═══════════════════════════════════════════════════════════════════
+// Features Immersive Scroll Logic (Akiff's implementation)
+// ═══════════════════════════════════════════════════════════════════
+const featureBlocks = document.querySelectorAll('.feature-text-block');
+const featureVisuals = document.querySelectorAll('.feature-visual');
+
+if (featureBlocks.length > 0 && featureVisuals.length > 0) {
+    const featureObserverOptions = {
+        root: null,
+        rootMargin: '-30% 0px -30% 0px',
+        threshold: 0.1
+    };
+
+    const featureObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const featureId = entry.target.getAttribute('data-feature');
+
+                // Remove active class from all visuals
+                featureVisuals.forEach(visual => {
+                    visual.classList.remove('active');
+                });
+
+                // Add active class to the matching visual
+                const activeVisual = document.querySelector(`.feature-visual[data-feature="${featureId}"]`);
+                if (activeVisual) {
+                    activeVisual.classList.add('active');
+                }
+            }
+        });
+    }, featureObserverOptions);
+
+    featureBlocks.forEach(block => featureObserver.observe(block));
+}
